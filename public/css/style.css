@@ -65,8 +65,52 @@ main {
 /* Styling the Map */
 .mapContainer {
     /* background-color: blue; */
+    height: 85vh;
+    width: 100%;
+}
+
+
+/* Styling the List Component */
+.listContainer {
+    /* background-color: lightblue; */
+    padding: .5rem 1rem;
     height: 90vh;
     width: 100%;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+}
+.listContainer > h4 {
+    font-size: 1.5rem;
+    margin-bottom: .5rem;
+}
+
+.listContainer .forms {
+    display: flex;
+    gap: .5rem;
+}
+
+.listContainer .forms legend {
+    color: rgba(0, 0, 0, 0.678);
+    margin-bottom: .5rem;
+}
+
+.listContainer .forms .formControl select {
+    /* width: 7rem; */
+    padding: 0 0 .15rem 0;
+    border: none;
+    border-bottom: 1px solid black;
+    margin-bottom: 1rem;
+}
+
+/* Place Details*/
+.listContainer .placeDisplayer {
+    background-color: lightblue;
+    display: grid;
+    row-gap: 1rem;
+}
+
+.listContainer .placeDisplayer .placeCard {
+    color: darkblue;
 }
 
 
@@ -75,5 +119,9 @@ main {
         grid-template-columns: 1fr;
         grid-template-rows: repeat(2, 1fr);
         padding: 0.5rem 1rem;
+    }
+
+    .listContainer {
+        padding: .5rem .5rem;
     }
 }
