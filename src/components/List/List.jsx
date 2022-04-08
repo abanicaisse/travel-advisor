@@ -10,10 +10,10 @@ const List = () => {
         {name: "cool place"},
         {name: "Best Beer"},
         {name: "Best Steak"},
-        {name: "Best Steak"},
-        {name: "Best Steak"},
-        {name: "Best Steak"},
-        {name: "Best Steak"},
+        {name: "Cool Place"},
+        {name: "Best Hotel"},
+        {name: "Great Pool"},
+        {name: "Mystic Gym"},
         {name: "Best Steak"},
         {name: "Best Steak"}
     ]
