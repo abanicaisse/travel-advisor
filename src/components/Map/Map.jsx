@@ -14,16 +14,21 @@ const Map = ({ setCoordinates, setBoundaries, coordinates }) => {
   const map = useRef(null);
 
   const coords = { lat: 0, lng: 0 };
-  const [zoom, setZoom] = useState(5);
+  const [zoom, setZoom] = useState(10);
 
   useEffect(() => {
-    if (map.current) return; // initialize map only once
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: "mapbox://styles/mapbox/streets-v11",
-      center: [coords.lng, coords.lat],
-      zoom: zoom,
-    });
+    const loadMap = async () => {
+      await coordinates;
+
+      if (map.current) return; // initialize map only once
+      map.current = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: "mapbox://styles/mapbox/streets-v11",
+        center: [coordinates.lng, coordinates.lat],
+        zoom: zoom,
+      });
+    };
+    loadMap();
   });
 
   return <div ref={mapContainer} className="mapContainer"></div>;

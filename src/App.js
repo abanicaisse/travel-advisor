@@ -1,41 +1,59 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 
-import Header from "./components/Header/Header"
-import List from "./components/List/List"
-import Map from "./components/Map/Map"
+import Header from "./components/Header/Header";
+import List from "./components/List/List";
+import Map from "./components/Map/Map";
 
 import { getPlacesData } from "./api";
 
-
 const App = () => {
-    const [places, setPlaces] = useState([]);
-    const [coordinates, setCoordinates] = useState({});
-    const [boundaries, setBoundaries] = useState({});
+  const [places, setPlaces] = useState([]);
+  const [coordinates, setCoordinates] = useState({});
+  const [boundaries, setBoundaries] = useState({
+    ne: {
+      lat: 0.5077264679633942,
+      lng: 32.80528619843784,
+    },
+    sw: {
+      lat: 0.1476302962044258,
+      lng: 32.37681940156267,
+    },
+  });
 
+  // user live location
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      ({ coords: { latitude, longitude } }) => {
+        setCoordinates({ lng: longitude, lat: latitude });
+      }
+    );
+  }, []);
 
-    console.log(coordinates, boundaries)
+  useEffect(() => {
+    getPlacesData(boundaries.ne, boundaries.sw).then((data) => {
+      console.log(data);
+      setPlaces(data);
+    });
+  }, []);
 
-    useEffect(() => {
-        getPlacesData()
-            .then(data => {
-                console.log(data)
-                setPlaces(data);
-            })
-    }, [])
+  console.log({ boundaries });
+  console.log({ coordinates });
+  console.log({ places });
 
-    return (
-        <>
-            <Header />
-            <main className="layout">
-                <List className="list"/>
-                <Map className="map"
-                    setCoordinates={setCoordinates}
-                    setBoundaries={setBoundaries}
-                    coordinates={coordinates}
-                />
-            </main>
-        </>
-    )
-}
+  return (
+    <>
+      <Header />
+      <main className="layout">
+        <List className="list" places={places} />
+        <Map
+          className="map"
+          setCoordinates={setCoordinates}
+          setBoundaries={setBoundaries}
+          coordinates={coordinates}
+        />
+      </main>
+    </>
+  );
+};
 
 export default App;
