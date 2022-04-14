@@ -29,8 +29,8 @@ const PlaceDetails = ({ place }) => {
         </div>
 
         <div className="place-awards">
-          {place?.awards?.map((award) => (
-            <div className="award">
+          {place?.awards?.map((award, i) => (
+            <div key={i} className="award">
               <img src={award.images.small} alt={award.display_name} />
               <p>{award.display_name}</p>
             </div>
@@ -39,7 +39,9 @@ const PlaceDetails = ({ place }) => {
 
         <div className="place-cuisine">
           {place?.cuisine?.map(({ name }) => (
-            <p className="cuisine-chip">{name}</p>
+            <p key={name} className="cuisine-chip">
+              {name}
+            </p>
           ))}
         </div>
 

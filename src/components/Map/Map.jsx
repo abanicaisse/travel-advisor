@@ -1,37 +1,42 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import Rating from "@material-ui/lab";
+import MapGL from "react-map-gl";
 
-// Mapbox component to load the Map
-import mapboxgl from "mapbox-gl";
-
-mapboxgl.accessToken =
-  "pk.eyJ1IjoiYWJhbmljYWlzc2UiLCJhIjoiY2t6eG1nN3BrMDI0cTJucDk2aWxoMm13ciJ9.MiOa2FmEfZ5_3YW9xcdjrg";
+const MAPBOX_TOKEN =
+  "pk.eyJ1IjoiYWJhbmljYWlzc2UiLCJhIjoiY2wxd2c1dDBiMGoxbzNqbXB5cnM5MnVmYSJ9.71nMVRD5jfI31jpPEyaimg";
 
 const Map = ({ setCoordinates, setBoundaries, coordinates }) => {
-  const mapContainer = useRef(null);
-  const map = useRef(null);
+  const mapRef = useRef(null);
 
-  const coords = { lat: 0, lng: 0 };
-  const [zoom, setZoom] = useState(10);
-
-  useEffect(() => {
-    const loadMap = async () => {
-      await coordinates;
-
-      if (map.current) return; // initialize map only once
-      map.current = new mapboxgl.Map({
-        container: mapContainer.current,
-        style: "mapbox://styles/mapbox/streets-v11",
-        center: [coordinates.lng, coordinates.lat],
-        zoom: zoom,
-      });
-    };
-    loadMap();
+  const [viewState, setViewState] = useState({
+    zoom: 14,
   });
 
-  return <div ref={mapContainer} className="mapContainer"></div>;
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((pos) => {
+      setViewState({
+        ...viewState,
+        latitude: pos.coords.latitude,
+        longitude: pos.coords.longitude,
+      });
+    });
+
+    setCoordinates({ lng: viewState.longitude, lat: viewState.latitude });
+  }, []);
+
+  return (
+    <div className="mapContainer">
+      <MapGL
+        ref={mapRef}
+        {...viewState}
+        mapboxAccessToken={MAPBOX_TOKEN}
+        onMove={(evt) => setViewState(evt.viewState)}
+        mapStyle="mapbox://styles/mapbox/streets-v11"
+      />
+    </div>
+  );
 };
 
 export default Map;

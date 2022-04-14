@@ -31,14 +31,9 @@ const App = () => {
 
   useEffect(() => {
     getPlacesData(boundaries.ne, boundaries.sw).then((data) => {
-      console.log(data);
       setPlaces(data);
     });
   }, []);
-
-  console.log({ boundaries });
-  console.log({ coordinates });
-  console.log({ places });
 
   return (
     <>

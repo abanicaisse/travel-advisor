@@ -66,14 +66,12 @@ main {
 
 /* Styling the Map */
 .mapContainer {
-  /* background-color: blue; */
   height: 85vh;
   width: 100%;
 }
 
 /* Styling the List Component */
 .listContainer {
-  /* background-color: lightblue; */
   padding: 0.5rem 1rem;
   height: 90vh;
   width: 100%;
@@ -96,7 +94,6 @@ main {
 }
 
 .listContainer .forms .formControl select {
-  /* width: 7rem; */
   padding: 0 0 0.15rem 0;
   border: none;
   border-bottom: 1px solid black;
